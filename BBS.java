@@ -5,7 +5,7 @@ import it.unisa.dia.gas.jpbc.Element;
 
 public class BBS {
     public static void main(String[] args) {
-        //1.系统初始化
+        //1.System Initialization
         long startInitialize = System.nanoTime();
         //f类椭圆曲线生成非对称的双线性群，配对运算时间长，安全性更强
         Pairing bp = PairingFactory.getPairing("f.properties");
@@ -14,11 +14,11 @@ public class BBS {
         Field Zr = bp.getZr();
         //int n;
         long endInitialize = System.nanoTime();
-        long timeInitialize = endInitialize - startInitialize; //单位为纳秒
-        System.out.println("系统初始化时间: "+timeInitialize/(1e6)+"ms");
+        long timeInitialize = endInitialize - startInitialize; //unit is nanosecond
+        System.out.println("System Initialization time: "+timeInitialize/(1e6)+"ms");
 
 
-        //2.密钥生成
+        //2.Key Generation
         long startGenKey = System.nanoTime();
 
         Element g1 = G1.newRandomElement().getImmutable();
@@ -34,7 +34,7 @@ public class BBS {
         System.out.println((u.powZn(xi_1)).isEqual(v.powZn(xi_2)));*/
         Element gamma = Zr.newRandomElement().getImmutable();
         Element omega = g2.powZn(gamma).getImmutable();
-        System.out.print("群公钥为：");
+        System.out.print("group public key：");
         System.out.print('(');
         System.out.print(g1);
         System.out.print(',');
@@ -49,24 +49,24 @@ public class BBS {
         System.out.print(omega);
         System.out.println(')');
 
-        System.out.print("管理员私钥为：");
+        System.out.print("manger private key：");
         System.out.print('(');
         System.out.print(xi_1);
         System.out.print(',');
         System.out.print(xi_2);
         System.out.println(')');
 
-        //群成员私钥
+        //member private key
         Element x = Zr.newRandomElement().getImmutable();
         Element gammaAddx = gamma.add(x).getImmutable();
 //        System.out.println(gammaAddx);
 //        System.out.println(x.add(gamma));
         Element A = g1.powZn(gammaAddx.invert()).getImmutable();
-        //检验非群成员随便伪造私钥能否验证成功
-        //Element A = G1.newRandomElement().getImmutable(); //验证失败
+        //check if private key forged by non-group member can succeed to pass verification
+        //Element A = G1.newRandomElement().getImmutable(); //verification failed
 //        System.out.println(x);
 //        System.out.println(A);
-        System.out.print("群成员私钥为：");
+        System.out.print("group member private key：");
         System.out.print('(');
         System.out.print(A);
         System.out.print(',');
@@ -74,11 +74,11 @@ public class BBS {
         System.out.println(')');
 
         long endGenKey = System.nanoTime();
-        long timeGenKey = endGenKey - startGenKey; //单位为纳秒
-        System.out.println("密钥生成时间: "+timeGenKey/(1e6)+"ms");
+        long timeGenKey = endGenKey - startGenKey; //unit is nanosecond
+        System.out.println("Key Generation time: "+timeGenKey/(1e6)+"ms");
 
 
-        //3.签名
+        //3.Signing
         long startSign = System.nanoTime();
 
         Element alpha = Zr.newRandomElement().getImmutable();
@@ -136,7 +136,7 @@ public class BBS {
         byte[] c_sign_byte = Integer.toString(c_sign).getBytes();
         Element c = (Zr.newElementFromHash(c_sign_byte, 0, c_sign_byte.length)).getImmutable();
         //System.out.println(c);
-        System.out.print("哈希值c：");
+        System.out.print("hash value c：");
         System.out.println(c);
 
         Element delta1 = x.mul(alpha).getImmutable();
@@ -147,7 +147,7 @@ public class BBS {
         Element s_delta1 = r_delta1.add(c.mul(delta1)).getImmutable();
         Element s_delta2 = r_delta2.add(c.mul(delta2)).getImmutable();
 
-        System.out.print("签名为：");
+        System.out.print("signature：");
         System.out.print('(');
         System.out.print(T1);
         System.out.print(',');
@@ -169,11 +169,11 @@ public class BBS {
         System.out.println(')');
 
         long endSign = System.nanoTime();
-        long timeSign = endSign - startSign; //单位为纳秒
-        System.out.println("签名时间: "+timeSign/(1e6)+"ms");
+        long timeSign = endSign - startSign; //unit is nanosecond
+        System.out.println("Signing time: "+timeSign/(1e6)+"ms");
 
 
-        //4.验证
+        //4.Verification
         long startVerify = System.nanoTime();
 
         Element R1_barPart1 = u.powZn(s_alpha);
@@ -228,27 +228,27 @@ public class BBS {
         int c_verify=M_verify.hashCode();
         byte[] c_verify_byte = Integer.toString(c_verify).getBytes();
         Element c_ = (Zr.newElementFromHash(c_verify_byte, 0, c_verify_byte.length)).getImmutable();
-        System.out.print("哈希值c_：");
+        System.out.print("hash value c_：");
         System.out.println(c_);
         if(c_.isEqual(c)){
-            System.out.println("验证成功");
+            System.out.println("succeed to verify");
         }
         else{
-            System.out.println("验证失败");
+            System.out.println("fail to verify");
         }
 
         long endVerify = System.nanoTime();
-        long timeVerify = endVerify - startVerify; //单位为纳秒
-        System.out.println("验证时间: "+timeVerify/(1e6)+"ms");
+        long timeVerify = endVerify - startVerify; //unit is nanosecond
+        System.out.println("Verification time: "+timeVerify/(1e6)+"ms");
 
 
-        //5.打开
+        //5.Open the group signature to identify the signer
         long startOpen = System.nanoTime();
         Element A_ = T3.div((T1.powZn(xi_1)).mul(T2.powZn(xi_2)));
 //        System.out.println(A);
 //        System.out.println(A_);
         long endOpen = System.nanoTime();
-        long timeOpen = endOpen - startOpen; //单位为纳秒
-        System.out.println("打开时间: "+timeOpen/(1e6)+"ms");
+        long timeOpen = endOpen - startOpen; //unit is nanosecond
+        System.out.println("Open time: "+timeOpen/(1e6)+"ms");
     }
 }
