@@ -70,7 +70,7 @@ the original paper: https://crypto.stanford.edu/~dabo/pubs/papers/groupsigs.pdf
 
 #### 1. System Initialization
 
-Assume bilinear groups($G_1,G_2$), and$G_1,G_2$are two multiplicative cyclic groups of prime order $p$. The number of group member is $n$.
+Assume bilinear groups($G_1,G_2$), and $G_1,G_2$ are two multiplicative cyclic groups of prime order $p$. The number of group member is $n$.
 
 
 
@@ -82,7 +82,7 @@ Assume bilinear groups($G_1,G_2$), and$G_1,G_2$are two multiplicative cyclic gro
 
 - choose $\gamma\in{Z_p}^*$, compute $\omega={g_2}^\gamma$
 
-- ***group public key is $ (g_1,g_2,h,u,v,\omega) $ , group manger private key is $(\xi_1,\xi_2)$***
+- ***group public key is $ (g_1,g_2,h,u,v,\omega) $ , group manger private key is ($\xi_1,\xi_2$)***
 
 For each group member $i$, group manger select $x_i\in{Z_p}^*$, ensuring every member's $x_i$ is different from each other, and set $A_i=g_1^{\frac{1}{\gamma+x_i}}$, thus ***the private key of each group member is $(A_i,x_i)$***.
 
