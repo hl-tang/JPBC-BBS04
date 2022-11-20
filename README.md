@@ -70,7 +70,7 @@ the original paper: https://crypto.stanford.edu/~dabo/pubs/papers/groupsigs.pdf
 
 #### 1. System Initialization
 
-Assume bilinear groups($G_1$,$G_2$), and$G_1$,$G_2$are two multiplicative cyclic groups of prime order$p$. The number of group member is $n$.
+Assume bilinear groups($G_1,G_2$), and$G_1,G_2$are two multiplicative cyclic groups of prime order $p$. The number of group member is $n$.
 
 
 
@@ -78,11 +78,11 @@ Assume bilinear groups($G_1$,$G_2$), and$G_1$,$G_2$are two multiplicative cyclic
 
 - choose a generator $g_1$ from $G_1$, choose a generator $g_2$ from $G_2$
 
-- select $h$$\in$$G_1$$\backslash$$\lbrace$$1_{G_1}$$\rbrace$  (1 stands for the identity element of $G_1$, so $h$ is the element in $G_1$ except  identity element 1), choose $\xi_1,\xi_2\in$ ${Z_p}^*$ ; select $u,v\in$ $G_1$ so that $u^{\xi_1}=v^{\xi_2}=h$
+- select $h$ $\in$ $G_1$ $\backslash$$\lbrace$$1_{G_1}$$\rbrace$  (1 stands for the identity element of $G_1$, so $h$ is the element in $G_1$ except  identity element 1), choose $\xi_1,\xi_2\in$ ${Z_p}^*$ ; select $u,v\in$ $G_1$ so that $u^{\xi_1}=v^{\xi_2}=h$
 
 - choose $\gamma\in{Z_p}^*$, compute $\omega={g_2}^\gamma$
 
-- ***group public key is $(g_1,g_2,h,u,v,\omega)$, group manger private key is $(\xi_1,\xi_2)$***
+- ***group public key is $ (g_1,g_2,h,u,v,\omega) $ , group manger private key is $(\xi_1,\xi_2)$***
 
 For each group member $i$, group manger select $x_i\in{Z_p}^*$, ensuring every member's $x_i$ is different from each other, and set $A_i=g_1^{\frac{1}{\gamma+x_i}}$, thus ***the private key of each group member is $(A_i,x_i)$***.
 
