@@ -1,6 +1,8 @@
 # JPBC-BBS04
 Using JPBC(Java Pairing-Based Cryptography Library) to implement pairing-based cryptography algorithm like BBS04 group signature. And I proposed a modification of batch verification to the original BBS04.
 
+If there exists formula displaying mistakes, check the pdf of README also.
+
 
 
 ## How to use JPBC
@@ -141,6 +143,8 @@ After hashing the message, transform int to byte array, then call `newElementFro
 
 
 
+
+
 ## A proposal of batch verification
 
 ### An improtant property of bilinear pairing
@@ -201,7 +205,7 @@ $$
 
 
 
-### batch verification of BBS04 scheme
+### Batch verification of BBS04 scheme
 
 Since the BBS04 group signature scheme is based on bilinear pairing, and pairing operation is about 1500 times as time-consuming as multiplication. If we receive several signatures and verify them separately, it will takes even more time.
 
@@ -245,4 +249,4 @@ $$
 
 
 
-If and only if the above equations are true, these n signatures can successfully pass the verification
+If and only if the above equations are true, these n signatures can successfully pass the verification together.
