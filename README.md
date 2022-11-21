@@ -207,7 +207,7 @@ Since the BBS04 group signature scheme is based on bilinear pairing, and pairing
 
 What if we verify a batch of signatures simultaneously?
 
- In this way, we can decrease the number of times to do paring from 5$n$ to 2, however big n is. Thus saving a lot of time for verification.
+ In this way, we can decrease the number of times to do paring from 5n to 2, however big n is. Thus saving a lot of time for verification.
 
 
 
@@ -215,7 +215,7 @@ What if we verify a batch of signatures simultaneously?
 
 Group public key is $(g_1,g_2,h,u,v,\omega)$
 
-Assume now we have $n$ signatures to verify, and the signatures are  separately $\sigma_i$ $=$ $({T_1}_i,{T_2}_i,{T_3}_i,c_i,{R_1}_i,{R_2}_i,{R_3}_i,{R_4}_i,{R_5}_i,{s_{\alpha}}_i,{s_{\beta}}_i,{s_x}_i,{s_{\delta_1}}_i,{s_{\delta_2}}_i)$	$(1 \leq i \leq n)$
+Assume now we have $n$ signatures to verify, and the signatures are  separately $\sigma_i$ $=$ $({T_1}_i,{T_2}_i,{T_3}_i,c_i,{R_1}_i,{R_2}_i,{R_3}_i,{R_4}_i,{R_5}_i,{s_{\alpha}}_i,{s_{\beta}}_i,{s_x}_i,{s_{\delta_1}}_i,{s_{\delta_2}}_i)$
 
 
 
