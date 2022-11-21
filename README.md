@@ -70,7 +70,7 @@ the original paper: https://crypto.stanford.edu/~dabo/pubs/papers/groupsigs.pdf
 
 #### 1. System Initialization
 
-Assume bilinear groups($G_1,G_2$), and $G_1,G_2$ are two multiplicative cyclic groups of prime order $p$. The number of group member is $n$.
+Assume bilinear groups ( $G_1,G_2$ ), and $G_1,G_2$ are two multiplicative cyclic groups of prime order $p$. The number of group member is $n$.
 
 
 
@@ -82,7 +82,7 @@ Assume bilinear groups($G_1,G_2$), and $G_1,G_2$ are two multiplicative cyclic g
 
 - choose $\gamma\in{Z_p}^*$, compute $\omega={g_2}^\gamma$
 
-- ***group public key is $ (g_1,g_2,h,u,v,\omega) $ , group manger private key is ($\xi_1,\xi_2$)***
+- ***group public key is $ (g_1,g_2,h,u,v,\omega) $ , group manger private key is ( $\xi_1,\xi_2$ )***
 
 For each group member $i$, group manger select $x_i\in{Z_p}^*$, ensuring every member's $x_i$ is different from each other, and set $A_i=g_1^{\frac{1}{\gamma+x_i}}$, thus ***the private key of each group member is $(A_i,x_i)$***.
 
@@ -118,6 +118,8 @@ if equals, then the signature is valid. Otherwise, invalid.
 #### 5. Open
 
 Compute $A=\frac{T_3}{T_1^{\xi_1} \cdot T_2^{\xi_2}}$ so as to trace the member who signed the group signature
+
+
 
 
 
@@ -167,5 +169,53 @@ When computing two bilinear pairings with the same $c$, we can only compute one 
 
 
 
+### Simplify the formula of computing $\bar{R_3}$
+
+During the verification, computing $\bar{R_3}$ is the most time-consuming, which have to do paring 5 times. With the help of the above property, it can be simplified to only 2 times.
+$$
+e(T_3,g_2)^{s_x} \cdot e(h,\omega)^{-s_\alpha-s_\beta} \cdot e(h,g_2)^{-s_{\delta_1}-s_{\delta_2}} \cdot (\frac{e(T_3,\omega)}{e(g_1,g_2)})^c
+$$
+
+$$
+= e({T_3}^{s_x},g_2) \cdot e(h^{-s_\alpha-s_\beta},\omega) \cdot e(h^{-s_{\delta_1}-s_{\delta_2}},g_2) \cdot e({T_3}^c,\omega) \cdot e({g_1}^{-c},g_2)
+$$
+
+$$
+= e({T_3}^{s_x} \cdot h^{-s_{\delta_1}-s_{\delta_2}} \cdot {g_1}^{-c},g_2) \cdot e(h^{-s_\alpha-s_\beta} \cdot {T_3}^c,\omega)
+$$
+
+
+
+Then consider the case that the number of signatures is $n$, still apply the above property, we'll have :
+$$
+\prod_{i=1}^n [e({{T_3}_i}^{{s_x}_i} \cdot h^{-{s_{\delta_1}}_i-{s_{\delta_2}}_i} \cdot {g_1}^{-c_i},g_2) \cdot e(h^{-{s_\alpha}_i-{s_\beta}_i} \cdot {T_3}^{c_i},\omega)]
+$$
+
+$$
+= e(\prod_{i=1}^n {{T_3}_i}^{{s_x}_i} \cdot h^{-{s_{\delta_1}}_i-{s_{\delta_2}}_i} \cdot {g_1}^{-c_i},g_2) \cdot e(\prod_{i=1}^n h^{-{s_\alpha}_i-{s_\beta}_i} \cdot {T_3}^{c_i},\omega)
+$$
+
+
+
+
+
 ### batch verification of BBS04 scheme
+
+Since the BBS04 group signature scheme is based on bilinear pairing, and pairing operation is about 1500 times as time-consuming as multiplication. If we receive several signatures and verify them separately, it will takes even more time.
+
+What if we verify a batch of signatures simultaneously?
+
+ In this way, we can decrease the number of times to do paring from 5$n$ to 2, however big n is. Thus saving a lot of time for verification.
+
+
+
+**A modification of batch verification as follow :**
+
+Group public key is $(g_1,g_2,h,u,v,\omega)$
+
+Assume now we have $n$ signatures to verify, and the signatures are  separately $\sigma_i=({T_1}_i,{T_2}_i,{T_3}_i,c_i,{R_1}_i,{R_2}_i,{R_3}_i,{R_4}_i,{R_5}_i,{s_\alpha}_i,{s_\beta}_i,{s_x}_i,{s_{\delta_1}}_i,{s_{\delta_2}}_i)$	$(1 \leq i \leq n)$
+
+
+
+
 
